@@ -2,8 +2,8 @@
 name: "creating vpc and route tables"
 
 on:
-  # push:
-  workflow_dispatch:
+  push:
+  # workflow_dispatch:
 
 jobs:
   terraform_deploy:

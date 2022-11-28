@@ -3,9 +3,9 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
-    random = {
-      source = "hashicorp/random"
-    }
+    # random = {
+    #   source = "hashicorp/random"
+    # }
   }
 
   cloud {
@@ -19,7 +19,7 @@ terraform {
 
 
 
-module "vpc" {
+module "vpc" "pearl-vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
   name = "pearl-vpc"
@@ -37,7 +37,7 @@ module "vpc" {
     Environment = "test"
   }
 }
-
+# -------------------------------------------------------------------------------------------------------------------------
 # Setting up the route table
 resource "aws_route_table" "pearl-route" {
   vpc_id = aws_vpc.pearl-vpc.id
