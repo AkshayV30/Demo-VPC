@@ -9,6 +9,7 @@ jobs:
   terraform_deploy:
     name: creating resources for vpc
     runs-on: ubuntu-22.04
+    environment: test
     steps:
       - name: Checking Out
         uses: actions/checkout@v3
