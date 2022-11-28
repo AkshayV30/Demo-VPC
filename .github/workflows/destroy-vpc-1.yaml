@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  terraform_deploy:
+  cleanup:
     name: creating resources for vpc
     runs-on: ubuntu-22.04
     environment: test
@@ -35,12 +35,6 @@ jobs:
       #     terraform validate
       #     terraform plan
 
-      # - name: Terraform destroy
-      #   id: destroy
-      #   run: terraform destroy -auto-approve -input=false
-
-      - name: terraform destroy
-        uses: dflook/terraform-destroy-workspace@v1
-        with:
-          path: terraform
-          workspace: ${{ github.head_ref }}
+      - name: Terraform destroy
+        id: destroy
+        run: terraform destroy -auto-approve -input=false
