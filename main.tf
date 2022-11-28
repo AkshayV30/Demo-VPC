@@ -40,7 +40,7 @@ module "vpc" {
 
 # Setting up the route table
 resource "aws_route_table" "pearl-route" {
-  vpc_id = aws_vpc.test-vpc.id
+  vpc_id = aws_vpc.pearl-vpc.id
   route {
     # pointing to the internet
     cidr_block = "0.0.0.0/0"
@@ -61,7 +61,7 @@ resource "aws_route_table" "pearl-route" {
 resource "aws_security_group" "pearl-security-group" {
   name        = "pearl-security-1"
   description = "Enable web traffic for the project"
-  vpc_id      = aws_vpc.test-vpc.id
+  vpc_id      = aws_vpc.pearl-vpc.id
   ingress {
     description = "HTTPS traffic"
     from_port   = 443
