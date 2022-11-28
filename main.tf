@@ -1,21 +1,21 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
-    # random = {
-    #   source = "hashicorp/random"
-    # }
-  }
+# terraform {
+#   required_providers {
+#     aws = {
+#       source = "hashicorp/aws"
+#     }
+#     # random = {
+#     #   source = "hashicorp/random"
+#     # }
+#   }
 
-  cloud {
-    organization = "project-demo-17-11-2022"
+#   cloud {
+#     organization = "project-demo-17-11-2022"
 
-    workspaces {
-      name = "snipe-git-actions"
-    }
-  }
-}
+#     workspaces {
+#       name = "snipe-git-actions"
+#     }
+#   }
+# }
 
 
 
@@ -37,6 +37,25 @@ terraform {
 #     Environment = "test"
 #   }
 # }
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      # optional
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Configuring provider
+# provider "aws" {
+#   region     = "us-east-2"
+#   access_key = "my-access-key"
+#   secret_key = "my-secret-key"
+# }
+
+
 # -------------------------------------------------------------------------------------------------------------------------
 # Creating a VPC
 resource "aws_vpc" "pearl-vpc" {
