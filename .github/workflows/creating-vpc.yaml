@@ -28,10 +28,16 @@ jobs:
 
       - name: Terraform plan
         id: plan
-        env:
-          TF_VAR_ec2_name: "${{ github.event.inputs.ec2-name }}"
         run: |
           terraform init
           terraform validate
           terraform plan
-        # terraform apply -auto-approve
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      # - name: Terraform apply
+      #   id: apply
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   run: terraform apply -auto-approve -input=false
