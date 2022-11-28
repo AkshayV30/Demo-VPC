@@ -28,12 +28,9 @@ jobs:
         with:
           terraform_wrapper: false
 
-      # - name: Terraform plan
-      #   id: plan
-      #   run: |
-      #     terraform init
-      #     terraform validate
-      #     terraform plan
+      - name: Terraform plan
+        run: |
+          terraform init
 
       - name: Terraform destroy
         id: destroy
