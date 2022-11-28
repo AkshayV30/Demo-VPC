@@ -27,16 +27,16 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           terraform_wrapper: false
 
-      - name: Terraform plan
-        id: plan
-        run: |
-          terraform init
-          terraform validate
-          terraform plan
+      # - name: Terraform plan
+      #   id: plan
+      #   run: |
+      #     terraform init
+      #     terraform validate
+      #     terraform plan
 
-      - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
-        run: exit 1
+      # - name: Terraform Plan Status
+      #   if: steps.plan.outcome == 'failure'
+      #   run: exit 1
 
       # - name: Terraform apply
       #   id: apply
