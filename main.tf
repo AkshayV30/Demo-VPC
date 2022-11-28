@@ -69,6 +69,7 @@ resource "aws_subnet" "pearl-subnet" {
     Name = "pearl-subnet-1"
   }
 }
+
 # Associating the subnet with the route table
 resource "aws_route_table_association" "pearl-route-sub-assoc" {
   subnet_id      = aws_subnet.pearl-subnet.id
