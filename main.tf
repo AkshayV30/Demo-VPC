@@ -80,7 +80,7 @@ resource "aws_subnet" "pearl-subnet" {
 # Associating the subnet with the route table
 resource "aws_route_table_association" "pearl-rt-sub-assoc" {
   subnet_id      = aws_subnet.pearl-subnet.id
-  route_table_id = aws_route_table.pearl-rt.id
+  route_table_id = aws_route_table.pearl-route.id
 }
 
 
@@ -119,7 +119,7 @@ resource "aws_security_group" "pearl-security-group" {
     ipv6_cidr_blocks = ["::/0"]
   }
   tags = {
-    Name = "pearl-security=group"
+    Name = "pearl-security-group"
   }
 }
 
@@ -127,7 +127,7 @@ resource "aws_security_group" "pearl-security-group" {
 resource "aws_network_interface" "pearl-ni" {
   subnet_id       = aws_subnet.pearl-subnet.id
   private_ips     = ["10.0.1.10"]
-  security_groups = [aws_security_group.pearl-sg.id]
+  security_groups = [aws_security_group.pearl-security-group.id]
 }
 
 # Attaching an elastic IP to the network interface
