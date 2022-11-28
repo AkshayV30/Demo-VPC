@@ -19,25 +19,38 @@ terraform {
 
 
 
-module "vpc" "pearl-vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+# module "vpc" {
+#   source = "terraform-aws-modules/vpc/aws"
 
-  name = "pearl-vpc"
-  cidr = "10.0.0.0/16"
+#   name = "pearl-vpc"
+#   cidr = "10.0.0.0/16"
 
-  azs             = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+#   azs             = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
+#   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+#   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
-  enable_nat_gateway = true
-  enable_vpn_gateway = true
+#   enable_nat_gateway = true
+#   enable_vpn_gateway = true
 
+#   tags = {
+#     Terraform   = "true"
+#     Environment = "test"
+#   }
+# }
+# -------------------------------------------------------------------------------------------------------------------------
+# Creating a VPC
+resource "aws_vpc" "pearl-vpc" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# Create an Internet Gateway
+resource "aws_internet_gateway" "pearl-ig" {
+  vpc_id = aws_vpc.pearl-vpc.id
   tags = {
-    Terraform   = "true"
-    Environment = "test"
+    Name = "pearl-gateway"
   }
 }
-# -------------------------------------------------------------------------------------------------------------------------
+
 # Setting up the route table
 resource "aws_route_table" "pearl-route" {
   vpc_id = aws_vpc.pearl-vpc.id
@@ -53,6 +66,21 @@ resource "aws_route_table" "pearl-route" {
   tags = {
     Name = "routetable-1"
   }
+}
+
+# Setting up the subnet
+resource "aws_subnet" "pearl-subnet" {
+  vpc_id            = aws_vpc.pearl-vpc.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "ap-south-1a"
+  tags = {
+    Name = "subnet1"
+  }
+}
+# Associating the subnet with the route table
+resource "aws_route_table_association" "pearl-rt-sub-assoc" {
+  subnet_id      = aws_subnet.pearl-subnet.id
+  route_table_id = aws_route_table.pearl-rt.id
 }
 
 
