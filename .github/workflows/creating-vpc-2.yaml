@@ -2,7 +2,7 @@
 #
 #  this method uses teraform  with terraform cloud
 #
-name: "creating vpc and route tables"
+name: "creating aws VPC resources with terrraform cloud"
 
 on:
   # push:
