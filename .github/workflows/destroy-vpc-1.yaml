@@ -28,13 +28,19 @@ jobs:
         with:
           terraform_wrapper: false
 
-      - name: Terraform plan
-        id: plan
-        run: |
-          terraform init
-          terraform validate
-          terraform plan
+      # - name: Terraform plan
+      #   id: plan
+      #   run: |
+      #     terraform init
+      #     terraform validate
+      #     terraform plan
 
-      - name: Terraform destroy
-        id: destroy
-        run: terraform destroy -auto-approve -input=false
+      # - name: Terraform destroy
+      #   id: destroy
+      #   run: terraform destroy -auto-approve -input=false
+
+      - name: terraform destroy
+        uses: dflook/terraform-destroy-workspace@v1
+        with:
+          path: terraform
+          workspace: ${{ github.head_ref }}

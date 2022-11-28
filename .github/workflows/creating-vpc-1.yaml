@@ -5,8 +5,8 @@
 name: "creating aws VPC resources without terrraform cloud"
 
 on:
-  push:
-  # workflow_dispatch:
+  # push:
+  workflow_dispatch:
 
 jobs:
   terraform_deploy:
