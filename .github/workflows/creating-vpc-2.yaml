@@ -1,0 +1,53 @@
+---
+#
+#  this method uses teraform  with terraform cloud
+#
+name: "creating vpc and route tables"
+
+on:
+  # push:
+  workflow_dispatch:
+
+jobs:
+  terraform_deploy:
+    name: creating resources for vpc
+    runs-on: ubuntu-22.04
+    environment: test
+    steps:
+      - name: Checking Out
+        uses: actions/checkout@v3
+
+      - name: Configuring AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: "${{ secrets.TF_AWS_ACCESS_KEY_ID }}"
+          aws-secret-access-key: "${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}"
+          aws-region: ap-south-1
+
+      - name: Setting up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_TOKEN }}
+          terraform_wrapper: false
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt  -diff -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true

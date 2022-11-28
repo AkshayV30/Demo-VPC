@@ -1,3 +1,4 @@
+# uncommnet the required provider incase u want to use it with tearrform cloud
 # terraform {
 #   required_providers {
 #     aws = {
@@ -18,26 +19,6 @@
 # }
 
 
-
-# module "vpc" {
-#   source = "terraform-aws-modules/vpc/aws"
-
-#   name = "pearl-vpc"
-#   cidr = "10.0.0.0/16"
-
-#   azs             = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
-#   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-#   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
-
-#   enable_nat_gateway = true
-#   enable_vpn_gateway = true
-
-#   tags = {
-#     Terraform   = "true"
-#     Environment = "test"
-#   }
-# }
-
 terraform {
   required_providers {
     aws = {
@@ -47,14 +28,6 @@ terraform {
     }
   }
 }
-
-# Configuring provider
-# provider "aws" {
-#   region     = "us-east-2"
-#   access_key = "my-access-key"
-#   secret_key = "my-secret-key"
-# }
-
 
 # -------------------------------------------------------------------------------------------------------------------------
 # Creating a VPC
@@ -83,7 +56,7 @@ resource "aws_route_table" "pearl-route" {
     gateway_id      = aws_internet_gateway.pearl-ig.id
   }
   tags = {
-    Name = "routetable-1"
+    Name = "pearl-routetable-1"
   }
 }
 
@@ -93,11 +66,11 @@ resource "aws_subnet" "pearl-subnet" {
   cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-south-1a"
   tags = {
-    Name = "subnet1"
+    Name = "pearl-subnet-1"
   }
 }
 # Associating the subnet with the route table
-resource "aws_route_table_association" "pearl-rt-sub-assoc" {
+resource "aws_route_table_association" "pearl-route-sub-assoc" {
   subnet_id      = aws_subnet.pearl-subnet.id
   route_table_id = aws_route_table.pearl-route.id
 }

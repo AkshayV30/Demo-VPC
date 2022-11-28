@@ -1,4 +1,7 @@
 ---
+#
+#  this method uses teraform inside github runner without using terraform cloud
+#
 name: "creating vpc and route tables"
 
 on:
@@ -24,7 +27,6 @@ jobs:
       - name: Setting up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          # cli_config_credentials_token: ${{ secrets.TF_TOKEN }}
           terraform_wrapper: false
 
       - name: Terraform plan
@@ -38,25 +40,7 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1
 
-      # - name: Terraform apply
-      #   id: apply
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: terraform apply -auto-approve -input=false
-
-      # - name: Terraform fmt
-      #   id: fmt
-      #   run: terraform fmt  -diff -check
-      #   continue-on-error: true
-
-      # - name: Terraform Init
-      #   id: init
-      #   run: terraform init
-
-      # - name: Terraform Validate
-      #   id: validate
-      #   run: terraform validate -no-color
-
-      # - name: Terraform Plan
-      #   id: plan
-      #   run: terraform plan -no-color
-      #   continue-on-error: true
+      - name: Terraform apply
+        id: apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
