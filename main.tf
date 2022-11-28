@@ -123,7 +123,7 @@ resource "aws_network_interface" "pearl-ni" {
   security_groups = [aws_security_group.pearl-security-group.id]
 }
 
-# Attaching an elastic IP to the network interface
+# Attaching an elastic IP to the network  interface
 resource "aws_eip" "pearl-eip" {
   vpc                       = true
   network_interface         = aws_network_interface.pearl-ni.id
